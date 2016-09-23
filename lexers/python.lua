@@ -1,7 +1,7 @@
 -- Copyright 2006-2016 Mitchell mitchell.att.foicica.com. See LICENSE.
 -- Python LPeg lexer.
 
-local l = require('lexer')
+local l = require('lexers.lexer')
 local token, word_match = l.token, l.word_match
 local P, R, S = lpeg.P, lpeg.R, lpeg.S
 
