@@ -1,0 +1,34 @@
+\ProvidesPackage{scintillua-verb}
+
+\RequirePackage{pgfkeys}
+
+\def\slvset#1{\pgfkeys{/slv/.cd, #1}}
+
+\pgfkeys{%
+  /slv/.is family,
+  /slv/.cd,
+  language/.initial = latex,
+}
+
+\directlua{dofile('scintillua-verb.lua')}
+
+\directlua{%
+  luatexbase.provides_module(slv.module_info)}
+
+\newenvironment{slverbatim}[1][]{%
+  \slvset{#1}%
+  % FIXME: Currently, all specific language lexer require 'lexer.lua' and it is not found
+  % FIXME: Current workaround (BAD): local l = require('lexer') -> local l = require('lexers.lexer') 
+  \directlua{%
+    slv.currentlexer = '\pgfkeysvalueof{/slv/language}'
+    slv.lexer[slv.currentlexer] = slv.lexer[slv.currentlexer] or slv.lexer.load('lexers.' .. slv.currentlexer)}%
+  \ttfamily%
+  \directlua{slv.begin_buffer()}}{%
+  \directlua{slv.end_buffer()}}
+
+
+\endinput
+
+% Local Variables:
+% coding: utf-8-unix
+% End:

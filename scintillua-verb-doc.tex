@@ -1,0 +1,45 @@
+\documentclass{article}
+
+\usepackage{geometry}
+\geometry{a4paper, margin = 2cm}
+
+%\usepackage{fontspec}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+
+\usepackage{tcolorbox}
+
+\usepackage{scintillua-verb}
+
+\begin{document}
+
+\begin{tcolorbox}
+  \begin{slverbatim}[language = python]
+def fact(n):
+    if n == 1:
+        return 1
+    else:
+        return fact(n - 1) * n
+print(fact(4))
+  \end{slverbatim}
+\end{tcolorbox}
+
+\begin{tcolorbox}
+  \begin{slverbatim}[language = latex]
+\def\test#1{$x^2(t)$}
+\begin{verbatim}
+  \begin{tabular}{c|c}
+    Test 1 & Test 2 \\
+    Yo     & Ya
+  \end{tabular}
+\end{verbatim}
+  \end{slverbatim}
+\end{tcolorbox}
+
+\end{document}
+
+
+% Local Variables:
+% coding: utf-8-unix
+% TeX-engine: luatex
+% End:
