@@ -49,11 +49,26 @@ function slv.lex(tobelexed)
       local i, j
       local tokens
       for i = 1, #tobelexed do
+	 local current_pos = 1
+
 	 write_nl(tobelexed[i])
 	 tokens = slv.lexer[slv.currentlexer]:lex(tobelexed[i])
+
 	 for j = 1, #tokens, 2 do
 	    write_nl(tokens[j] .. '\t' .. tokens[j + 1])
+	    if tokens[j] == 'keyword' then
+	       tex.sprint('\\color{red}')
+	       tex.sprint(-2, string.sub(tobelexed[i], current_pos, tokens[j + 1] - 1))
+	       tex.sprint('\\color{black}')
+	    elseif tokens[j] == 'lexers.python_whitespace' then
+	       local s = string.gsub(string.sub(tobelexed[i], current_pos, tokens[j + 1] - 1), " ", "\\space ")
+	       tex.sprint(s)
+	    else
+	       tex.sprint(-2, string.sub(tobelexed[i], current_pos, tokens[j + 1] - 1))
+	    end
+	    current_pos = tokens[j + 1]
 	 end
+	 tex.sprint('\\\\')
       end
    else
       local tokens = slv.lexer[slv.currentlexer]:lex(buffer)
